@@ -1,0 +1,71 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: springboot3-demo
+  profiles:
+    active: dev
+  # ==================== 数据源配置 ====================
+  # 数据库账号/密码等请在 application-dev.yml 中填写
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST:127.0.0.1}:${MYSQL_PORT:3306}/${MYSQL_DB:springboot3_demo}?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:root}
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      connection-timeout: 30000
+
+  # ==================== MyBatis-Plus ====================
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+    default-property-inclusion: non_null
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.zood.springboot3demo.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    banner: false
+    db-config:
+      id-type: auto
+
+# ==================== Sa-Token ====================
+sa-token:
+  # token 名称，前端通过该请求头携带
+  token-name: satoken
+  # token 有效期（秒），默认 30 天
+  timeout: 2592000
+  # 临时活跃有效期（秒）
+  active-timeout: -1
+  # 是否允许同一账号多端同时在线
+  is-concurrent: true
+  # 是否每次访问都刷新 token
+  is-read-header: true
+  is-read-cookie: false
+  # 登录失败锁定策略
+  is-last-activity: false
+
+demo:
+  name: springboot3-demo
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env,metrics
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    root: INFO
+    com.zood.springboot3demo: DEBUG

@@ -1,0 +1,15 @@
+# ==================== 开发环境配置 ====================
+# 数据库账号密码请在这里填写，例如：
+#   username: root
+#   password: 你的密码
+spring:
+  datasource:
+    username: root
+    password: root
+
+logging:
+  level:
+    com.zood.springboot3demo: DEBUG
+
+demo:
+  name: springboot3-demo-dev
